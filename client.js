@@ -1,6 +1,7 @@
-import { once } from "events";
+import { once } from "node:events";
 import * as cp from "node:child_process";
 
+// server.js needs to be the student exercise name
 const server = cp.spawn("node", ["server.js"]);
 const port = 5000;
 
@@ -17,7 +18,6 @@ message[0].toString("utf8");
 
 const sendRequest = async (path, options) => {
   const response = await fetch(`http://localhost:${port}${path}`, options);
-  // return an object
   const { status, statusText, ok } = response;
   const headers = Object.fromEntries(response.headers);
   const body = await response.text();
@@ -26,15 +26,26 @@ const sendRequest = async (path, options) => {
 
 // tests here
 
-await sendRequest("/db/mario12.json", {
+let response = await sendRequest("/db/mario12.json", {
   method: "GET",
 });
-await sendRequest("/db/mario1.json", {
+console.log(`
+Status: ${response.status}
+Body: ${response.body}
+Headers: ${response.headers}
+`)
+let response1 = await sendRequest("/db/mario1.json", {
   method: "GET",
 });
+console.log(`
+Status: ${response1.status}
+Body: ${response1.body}
+Headers: ${response1.headers["content-type"]}
+`)
 await sendRequest("/db/mario1.json", {
   method: "POST",
   body: "123",
 });
+
 
 server.kill("SIGQUIT");

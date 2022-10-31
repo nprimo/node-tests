@@ -35,10 +35,10 @@ const handlePost = async (req, res) => {
 const port = 5000;
 
 const server = http.createServer(async (req, res) => {
-  if (req.method == "GET") {
+  if (req.method === "GET") {
     await handleGet(req, res);
   }
-  if (req.method == "POST") {
+  if (req.method === "POST") {
     await handlePost(req, res);
   }
   res.end();
