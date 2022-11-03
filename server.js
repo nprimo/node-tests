@@ -46,7 +46,7 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(port, (err) => {
   if (err) {
-    res.writeHead(500);
+    process.exit(1);
     console.error(err);
   } else {
     console.log(`Listening on ${port}...`);
